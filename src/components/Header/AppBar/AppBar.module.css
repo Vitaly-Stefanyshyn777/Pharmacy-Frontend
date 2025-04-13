@@ -1,0 +1,23 @@
+.header {
+  width: 100vw;
+  background-color: var(--primary-light-gray-color);
+  border: none;
+}
+
+.wrapper {
+  display: none;
+
+  @media screen and (min-width: 1440px) {
+    width: 1184px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 46px;
+    padding: 28px 0;
+    margin: 0 auto;
+  }
+}
+
+.greenBackground {
+  background-color: var(--primary-green-color);
+}

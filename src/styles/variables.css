@@ -1,0 +1,16 @@
+:root {
+  --primary-white-color: #ffffff;
+  --secondary-white-color: #f1f1f1;
+  --primary-light-gray-color: #f7f8fa;
+  --primary-dark-gray-color: #93939a;
+  --primary-black-color: #1d1e21;
+  --primary-light-black-color: #1d1e2166;
+  --secondary-black-color: #252539;
+  --primary-green-color: #59b17a;
+  --primary-light-green-color: #59b17a1a;
+  --primary-dark-red-color: #e85050;
+  --primary-light-red-color: #e850501a;
+  --primary-font-family: 'Inter', sans-serif;
+  --transition-duration: 0.2s;
+  --transition-timing-function: ease-in-out;
+}
