@@ -1,25 +1,25 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export const instance = axios.create({
-  baseURL: 'https://epharmacy-349383307514.europe-central2.run.app',
+  baseURL: "https://pharmacy-backend-1-niy1.onrender.com",
   withCredentials: true,
 });
 
-export const setToken = token => {
+export const setToken = (token) => {
   instance.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 export const clearToken = () => {
-  instance.defaults.headers.common.Authorization = '';
+  instance.defaults.headers.common.Authorization = "";
 };
 
 export const registerAPI = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (formData, thunkApi) => {
     try {
-      const { data } = await instance.post('/user/register', formData);
+      const { data } = await instance.post("/user/register", formData);
       setToken(data.data.accessToken);
       return data;
     } catch (e) {
@@ -30,10 +30,10 @@ export const registerAPI = createAsyncThunk(
 );
 
 export const loginAPI = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (formData, thunkApi) => {
     try {
-      const { data } = await instance.post('/user/login', formData);
+      const { data } = await instance.post("/user/login", formData);
       setToken(data.data.accessToken);
       return data;
     } catch (e) {
@@ -44,22 +44,22 @@ export const loginAPI = createAsyncThunk(
 );
 
 export const refreshUserAPI = createAsyncThunk(
-  'auth/refresh',
+  "auth/refresh",
   async (_, thunkApi) => {
     try {
       const state = thunkApi.getState();
       const token = state.auth.token;
 
       if (!token) {
-        return thunkApi.rejectWithValue('Token is not valid');
+        return thunkApi.rejectWithValue("Token is not valid");
       }
       setToken(token);
 
-      const { data } = await instance.post('/user/refresh');
+      const { data } = await instance.post("/user/refresh");
       return data;
     } catch (e) {
       if (e.response && e.response.status === 401) {
-        return thunkApi.rejectWithValue('Unauthorized');
+        return thunkApi.rejectWithValue("Unauthorized");
       }
       return thunkApi.rejectWithValue(e.message);
     }
@@ -67,10 +67,10 @@ export const refreshUserAPI = createAsyncThunk(
 );
 
 export const logoutAPI = createAsyncThunk(
-  'auth/logout',
+  "auth/logout",
   async (_, thunkApi) => {
     try {
-      await instance.post('/user/logout');
+      await instance.post("/user/logout");
       clearToken();
       return;
     } catch (e) {
@@ -81,20 +81,20 @@ export const logoutAPI = createAsyncThunk(
 );
 
 export const getUserInfoAPI = createAsyncThunk(
-  'auth/getUserInfo',
+  "auth/getUserInfo",
   async (_, thunkApi) => {
     try {
       const state = thunkApi.getState();
       const token = state.auth.token;
 
-      if (!token) return thunkApi.rejectWithValue('Token is not valid');
+      if (!token) return thunkApi.rejectWithValue("Token is not valid");
       setToken(token);
 
-      const { data } = await instance.get('/user/user-info');
+      const { data } = await instance.get("/user/user-info");
       return data;
     } catch (e) {
       if (e.response && e.response.status === 401) {
-        return thunkApi.rejectWithValue('Unauthorized');
+        return thunkApi.rejectWithValue("Unauthorized");
       }
       toast.error(e.message);
       return thunkApi.rejectWithValue(e.message);
